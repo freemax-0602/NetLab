@@ -1,0 +1,7 @@
+---
+- name: Configure network labs
+  hosts: all
+  become: true
+  roles: 
+  - net_config
+  

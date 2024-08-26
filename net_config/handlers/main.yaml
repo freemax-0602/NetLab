@@ -1,0 +1,5 @@
+---
+# restart netplan
+- name: restart apply
+  ansible.builtin.shell: netplan apply
+

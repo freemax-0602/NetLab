@@ -1,0 +1,53 @@
+---
+#- name: Run the equivalent of "apt-get update" as a separate step
+#  ansible.builtin.apt:
+#    update_cache: yes
+#
+#- name: install traceroute packeges
+#  apt: 
+#    name: traceroute
+#    state: present
+
+#Nat configure
+- name: Set up NAT on inetRouter
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  with_items: 
+    - { src: "templates/iptables_rules.ipv4", dest: "/etc/iptables_rules.ipv4", mode: "0644" }
+    - { src: "templates/iptables_restore", dest: "/etc/network/if-pre-up.d/iptables", mode: "0755" }
+  when: (inventory_hostname == "inetRouter")
+
+# Up forward packages
+- name: set up forward packages across routers
+  sysctl:
+    name: net.ipv4.conf.all.forwarding
+    value: '1'
+    state: present
+  when: "'routers' in group_names"
+
+# Disable default route
+- name: disable default route
+  template: 
+    src: templates/00-installer-config.yaml
+    dest: /etc/netplan/00-installer-config.yaml
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart netplan
+  when: (inventory_hostname != "inetRouter") 
+
+# import 
+- name: add default gateway for centralRouter
+  template: 
+    src: "templates/50-vagrant_{{inventory_hostname}}.yaml"
+    dest: /etc/netplan/50-vagrant.yaml
+    owner: root
+    group: root
+    mode: 0644
+#  notify: 
+#    - restart apply
+

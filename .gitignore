@@ -53,3 +53,12 @@
 .vagrant/machines/office1Server/virtualbox/action_provision
 .vagrant/machines/office1Server/virtualbox/action_set_name
 .vagrant/machines/office2Router/virtualbox/vagrant_cwd
+.vagrant/machines/office1Router/virtualbox/action_provision
+.vagrant/machines/office1Router/virtualbox/action_set_name
+.vagrant/machines/office1Router/virtualbox/box_meta
+.vagrant/machines/office1Router/virtualbox/creator_uid
+.vagrant/machines/office1Router/virtualbox/id
+.vagrant/machines/office1Router/virtualbox/index_uuid
+.vagrant/machines/office1Router/virtualbox/private_key
+.vagrant/machines/office1Router/virtualbox/synced_folders
+.vagrant/machines/office1Router/virtualbox/vagrant_cwd
